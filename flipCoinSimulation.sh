@@ -1,21 +1,26 @@
 #!/bin/bash -x
 
 echo "This Problem displays the winner heads or tails"
-counter=10
 headcount=0
 tailcount=0
-while ((counter>0))
+
+while (( ((headcount<21)) || ((tailcount<21)) ))
 do
 	toss=$((RANDOM%2))
 	if((toss==1))
 	then
-		echo "HEAD"
 		((headcount++))
 	else
-		echo "TAIL"
 		((tailcount++))
 	fi
-	((counter--))
 done
-echo "Number of times head won:"$headcount
-echo "Number of times tail won:"$tailcount
+
+if ((headcount==tailcount))
+then
+	echo "It is a TIE"
+elif ((headcount>tailcount))
+then
+	echo "HEAD won by $(($headcount-$tailcount))"
+else
+	echo "TAIL won by $(($tailcount-$headcount))"
+fi
